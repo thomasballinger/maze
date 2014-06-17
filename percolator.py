@@ -1,4 +1,4 @@
-#similar to maze but just needs a path from top row to bottom row
+#similar to perc but just needs a path from top row to bottom row
 #remember everything is indexed as row column
 import random
 import matplotlib.pyplot as plt
@@ -74,16 +74,12 @@ def solve_perc(perc):
 
 	if(x==len(perc)-2):
 		return True
-	else: 
-		return False	
-
 
 def perc_trials(perc_size,numtrials,p):
 	num_solved=0
 
 	for _ in range(numtrials):
 		perc=init_perc(p,perc_size)
-		
 		if solve_perc(perc): #it solved it
 			num_solved+=1
 	return (num_solved+.0)/numtrials
@@ -93,16 +89,11 @@ def getandplot(size,numtrials):
 	for i in range(0,100,1):
 		p=(i+.0)/100
 		data.append([size,p,perc_trials(size,numtrials,p)])
-
-	
 	x,y=[],[]
-
 	for j in range(len(data)):
 		x.append(data[j][1])
 		y.append(data[j][2])
-
-	plt.plot(x,y,label='perc size is '+str(size))
-	plt.xlabel
+	plt.plot(x,y,label='maze size is ' + str(size))
 
 
 def singleton_perc():
@@ -113,13 +104,13 @@ def singleton_perc():
 	print_perc(perc)
 
 def main():
-	
+
 	numtrials=100;
-	getandplot(20,numtrials)
 	getandplot(10,numtrials)
-	getandplot(60,numtrials)
-	#getandplot(70,150)
-	#print "30"
+	getandplot(50,numtrials)
+	getandplot(100,numtrials)
+	getandplot(200,numtrials/2)
+	
 	plt.ylim([-.1,1.1])
 	plt.xlabel('wall density')
 	plt.ylabel('proportion of percs that are solvable')

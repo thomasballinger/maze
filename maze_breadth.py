@@ -121,7 +121,7 @@ def getandplot(size,numtrials):
 		y.append(data[j][2])
 
 	plt.plot(x,y,label='maze size is '+str(size))
-	plt.xlabel
+	
 
 
 def singleton_maze():
@@ -138,7 +138,7 @@ def main():
 	#getandplot(20,200)
 	#print "20"
 	#getandplot(30,200)
-	numtrials=200;
+	numtrials=20;
 	getandplot(60,numtrials)
 	#getandplot(70,150)
 	#print "30"
