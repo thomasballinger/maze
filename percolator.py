@@ -106,10 +106,10 @@ def singleton_perc():
 def main():
 
 	numtrials=100;
-	getandplot(10,numtrials)
+	getandplot(20,numtrials)
 	getandplot(50,numtrials)
 	getandplot(100,numtrials)
-	getandplot(200,numtrials/2)
+	getandplot(200,numtrials/5)
 	
 	plt.ylim([-.1,1.1])
 	plt.xlabel('wall density')
