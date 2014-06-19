@@ -91,11 +91,9 @@ def maze_data(maze_size,numtrials,p):
     num_solved=0
 
     for _ in range(numtrials):
-        [maze,start,end]=init_maze(p,maze_size)
+        maze, start, end = init_maze(p, maze_size)
         path=[[0,start]];
-        if maze[1][start].is_wall:
-            pass
-        elif step_solve(maze,[1,start],path): #it solved it
+        if step_solve(maze,[1,start],path): #it solved it
             num_solved+=1
     return (num_solved+.0)/numtrials
 
