@@ -5,6 +5,7 @@ def init_maze(p,n):
     """
     Returns maze (list of lists of Spots), start column and end column
 
+    maze if of height and width n
     Start is always on the top row
     End is always on the bottom row
     """
@@ -56,7 +57,9 @@ def step_solve(maze,loc,path):
     x=loc[0];
     y=loc[1];
 
-    if(path[len(path)-1]!=loc): 
+    # Question: is loc supposed to already be on the path when this function is called?
+
+    if(path[-1] != loc):
         path.append(loc) #because of retracing, it may already be on path
     
     maze[x][y].on_path=True; #to avoid loops
