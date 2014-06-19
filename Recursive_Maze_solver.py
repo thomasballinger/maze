@@ -37,7 +37,7 @@ def print_maze(maze):
 class Spot(object):
     def __init__(self, p):
         self.is_wall=(random.random()<p);
-        self.is_dud=False;
+        self.is_dud=False; #What does is_dud mean? It's not obvious to me
         self.on_path=False;
         self.is_start=False;
         self.is_end=False;
@@ -63,6 +63,7 @@ def step_solve(maze,loc,path):
         path.append(loc) #because of retracing, it may already be on path
     
     maze[x][y].on_path=True; #to avoid loops
+
     if(maze[x][y].is_start): #it traced all the way back to start
         return False;
     
