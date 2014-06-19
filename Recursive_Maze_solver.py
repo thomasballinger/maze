@@ -26,10 +26,10 @@ def init_maze(p,n):
     return maze, start, end
 
 
-def print_maze(maze,n):
+def print_maze(maze):
     for row in maze:
-        for col in row:
-            print col,
+        for spot in row:
+            print spot,
         print
 
 
@@ -127,7 +127,7 @@ def singleton_maze():
     path=[[0,start]];
 
     print step_solve(maze,[1,start],path)
-    print_maze(maze,size)   
+    print_maze(maze)
 
 def main():
     getandplot(5,10000)
