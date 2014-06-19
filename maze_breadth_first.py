@@ -22,16 +22,24 @@ def init_maze(p,n):
     maze[0][start].is_wall=True
     maze[n-1][end].is_end=True
     maze[n-1][end].is_wall=False
-    #clear a little window
+
+    clear_windows(maze, start, end)
+
+    return maze, start, end
+
+def clear_windows(maze, start, end):
+    """Makes maze not impossible one first and last moves
+
+    the three spaces within the maze proper (excluding the
+    outer wall) are made not walls
+    """
+    n = len(maze)
     maze[1][start].is_wall=False
     maze[1][start+1].is_wall=False
     maze[1][start-1].is_wall=False
     maze[n-2][end].is_wall=False
     maze[n-2][end+1].is_wall=False
     maze[n-2][end-1].is_wall=False
-
-
-    return maze, start, end
 
 
 def print_maze(maze):
