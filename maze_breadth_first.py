@@ -12,21 +12,25 @@ class Maze(object):
         """
         self.n = n
         self.board=[[Spot(p) for i in range(n)] for j in range(n)]
-        for i in range(n):
-            #make edges
-            self.board[0][i].is_wall=True;
-            self.board[n-1][i].is_wall=True;
-            self.board[i][0].is_wall=True;
-            self.board[i][n-1].is_wall=True;
+
         self.start=random.randint(1,n-3)
-        self.end=random.randint(1,n-3)
         self.board[0][self.start].is_start=True
-        self.board[0][self.start].on_path=True
         self.board[0][self.start].is_wall=True
+
+        self.end=random.randint(1,n-3)
         self.board[n-1][self.end].is_end=True
         self.board[n-1][self.end].is_wall=False
 
+        self.make_edges()
         self.clear_windows()
+
+    def make_edges(self):
+        for i in range(self.n):
+            #make edges
+            self.board[0][i].is_wall=True;
+            self.board[self.n-1][i].is_wall=True;
+            self.board[i][0].is_wall=True;
+            self.board[i][self.n-1].is_wall=True;
 
     def clear_windows(self):
         """Makes maze not impossible one first and last moves
