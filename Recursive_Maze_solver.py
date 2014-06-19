@@ -70,23 +70,13 @@ def step_solve(maze,loc,path):
     if maze[x][y].is_end:
         return True;
     if((maze[x][y].is_dud) and (not maze[x][y].is_start)):
-        return False
+        return False  #why this second check? We know it's not the start
     
-    
-    
-    # try down
-    if(maze[x+1][y].available):
-        return step_solve(maze,[x+1,y],path)
-    # try up
-    if(maze[x-1][y].available):
-        return step_solve(maze,[x-1,y],path)
-    #try right
-    if(maze[x][y+1].available):
-        return step_solve(maze,[x,y+1], path)
-    # try left
-    if(maze[x][y-1].available):
-        return step_solve(maze,[x,y-1],path)
-    
+    neighbors = [[x+1, y], [x-1, y], [x, y+1], [x, y-1]]
+    for neighbor_x, neighbor_y in neighbors:
+        if(maze[neighbor_x][neighbor_y].available):
+            return step_solve(maze, [neighbor_x, neighbor_y], path)
+
     #all four possibilities have been exhausted, this node is a dud
     maze[x][y].is_dud=True;
     maze[x][y].on_path=False;
