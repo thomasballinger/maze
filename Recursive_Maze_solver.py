@@ -75,7 +75,9 @@ def step_solve(maze,loc,path):
     neighbors = [[x+1, y], [x-1, y], [x, y+1], [x, y-1]]
     for neighbor_x, neighbor_y in neighbors:
         if(maze[neighbor_x][neighbor_y].available):
-            return step_solve(maze, [neighbor_x, neighbor_y], path)
+            solved = step_solve(maze, [neighbor_x, neighbor_y], path)
+            if solved:
+                return True
 
     #all four possibilities have been exhausted, this node is a dud
     maze[x][y].is_dud=True;
@@ -83,7 +85,7 @@ def step_solve(maze,loc,path):
      #remove current element
     path.pop(); #remove previous element
 
-    return step_solve(maze,path[len(path)-1],path)
+    return False
 
 def maze_data(maze_size,numtrials,p):
     num_solved=0
