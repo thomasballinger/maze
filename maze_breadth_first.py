@@ -76,10 +76,9 @@ def solve_maze(maze,start):
         #update cur
         x, y = reachable.pop()
         curSpot=maze[x][y]
-            
 
         if curSpot.is_end:
-            break
+            return True
 
         #add upto four spots to reachable
         #up
@@ -101,10 +100,7 @@ def solve_maze(maze,start):
 
         
 
-    if(curSpot.is_end):
-        return True
-    else: 
-        return False    
+    return False
 
 
 def maze_trials(maze_size,numtrials,p):
