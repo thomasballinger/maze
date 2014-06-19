@@ -2,7 +2,7 @@ import random
 import matplotlib.pyplot as plt
 
 def init_maze(p,n):
-    maze=[[Spot(p) for i in range(n)] for j in range(n)]
+    maze=[[Spot(p) for _ in range(n)] for _ in range(n)]
     for i in range(n):
         #make edges
         maze[0][i].is_wall=True;
