@@ -38,13 +38,8 @@ class Maze(object):
                      + self.board[self.n-2][self.end-1:self.end+1]):
             spot.is_wall = False
 
-
-def print_maze(maze):
-    for row in maze:
-        for spot in row:
-            print spot,
-        print
-
+    def __str__(self):
+        return '\n'.join(' '.join(str(spot) for spot in row) for row in self.board)
 
 class Spot(object):
     def __init__(self, p):
@@ -127,7 +122,7 @@ def singleton_maze():
     maze = Maze(p, size)
 
     print solve_maze(maze.board, maze.start)
-    print_maze(maze.board)
+    print maze
 
 def main():
     #getandplot(10,200)
