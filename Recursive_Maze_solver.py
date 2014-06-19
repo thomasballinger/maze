@@ -50,9 +50,8 @@ class Spot(object):
     def available(self):
         return(all([not self.on_path, not self.is_wall, not self.is_dud]))
 
-
 def step_solve(maze,loc,path):
-    'zero is returned for success'
+    'Returns True if maze solved, else False'
     n=len(maze)
     x=loc[0];
     y=loc[1];
