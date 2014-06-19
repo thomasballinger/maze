@@ -66,13 +66,19 @@ class Spot(object):
         return(all([not self.is_wall,not self.checked]))
 
 def solve_maze(maze,start):
-    reachable=[[1,start]] #list of reachable spots
+
+    reachable = []
+
+    def visit(row, column):
+        reachable.insert(0, [row, column])
+        maze[row][column].checked = True
+
+    visit(1, start)
     curSpot=maze[1][start]
     assert not curSpot.is_wall
-    curSpot.checked=True;
 
     while(reachable):
-        
+
         #update cur
         x, y = reachable.pop()
         curSpot=maze[x][y]
@@ -83,20 +89,16 @@ def solve_maze(maze,start):
         #add upto four spots to reachable
         #up
         if maze[x][y-1].available():
-            reachable[:0]=[[x,y-1]]
-            maze[x][y-1].checked=True
+            visit(x, y-1)
         #down
         if maze[x][y+1].available():
-            reachable[:0]=[[x,y+1]]
-            maze[x][y+1].checked=True
+            visit(x, y+1)
         #left
         if maze[x-1][y].available():
-            reachable[:0]=[[x-1,y]]
-            maze[x-1][y].checked=True
+            visit(x-1, y)
         #right
         if maze[x+1][y].available():
-            reachable[:0]=[[x+1,y]]
-            maze[x+1][y].checked=True
+            visit(x+1, y)
 
         
 
