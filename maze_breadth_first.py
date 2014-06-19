@@ -60,7 +60,7 @@ class Spot(object):
         if self.is_start: return 's'
         if self.is_end: return 'e'
         if self.checked: return 'o'
-        if self.is_wall: return '+'
+        if self.is_wall: return u'\u25d9'.encode('utf8')
         else: return ' '
     def available(self):
         return(all([not self.is_wall,not self.checked]))
