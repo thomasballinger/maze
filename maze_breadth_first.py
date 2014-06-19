@@ -159,5 +159,5 @@ def main():
 
 #if __name__ == '__main__':
 #   main()
-#singleton_maze()
 #main()
+singleton_maze()
