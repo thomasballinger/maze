@@ -36,8 +36,8 @@ def init_maze(p,n):
 
 def print_maze(maze):
     for row in maze:
-        for col in row:
-            print col,
+        for spot in row:
+            print spot,
         print
 
 
