@@ -18,10 +18,8 @@ def init_maze(p,n):
         maze[i][n-1].is_wall = True;
     start=random.randint(1, n-2)
     end=random.randint(1, n-2)
-    maze[0][start].is_start = True
     maze[0][start].on_path = True
     maze[0][start].is_dud = True
-    maze[n-1][end].is_end = True
     maze[n-1][end].is_wall = False
 
     return maze, start, end
@@ -39,11 +37,7 @@ class Spot(object):
         self.is_wall=(random.random()<p);
         self.is_dud=False; #What does is_dud mean? It's not obvious to me
         self.on_path=False;
-        self.is_start=False;
-        self.is_end=False;
     def __repr__(self):
-        if self.is_start: return 's'
-        if self.is_end: return 'e'
         if self.on_path: return 'o'
         if self.is_wall: return '+'
         else: return ' '
@@ -51,7 +45,7 @@ class Spot(object):
     def available(self):
         return(all([not self.on_path, not self.is_wall, not self.is_dud]))
 
-def step_solve(maze,loc,path):
+def step_solve(maze,loc,path, start, end):
     'Returns True if maze solved, else False'
     n=len(maze)
     x=loc[0];
@@ -64,18 +58,19 @@ def step_solve(maze,loc,path):
     
     maze[x][y].on_path=True; #to avoid loops
 
-    if(maze[x][y].is_start): #it traced all the way back to start
+    if y == start and x == 0: #it traced all the way back to start
         return False;
     
-    if maze[x][y].is_end:
+    if y == end and x == n-1:
         return True;
-    if((maze[x][y].is_dud) and (not maze[x][y].is_start)):
+
+    if((maze[x][y].is_dud)):
         return False  #why this second check? We know it's not the start
     
     neighbors = [[x+1, y], [x-1, y], [x, y+1], [x, y-1]]
     for neighbor_x, neighbor_y in neighbors:
         if(maze[neighbor_x][neighbor_y].available):
-            solved = step_solve(maze, [neighbor_x, neighbor_y], path)
+            solved = step_solve(maze, [neighbor_x, neighbor_y], path, start, end)
             if solved:
                 return True
 
@@ -93,7 +88,7 @@ def maze_data(maze_size,numtrials,p):
     for _ in range(numtrials):
         maze, start, end = init_maze(p, maze_size)
         path=[[0,start]];
-        if (not maze[1][start].is_wall) and step_solve(maze,[1,start],path): #it solved it
+        if (not maze[1][start].is_wall) and step_solve(maze,[1,start],path, start, end): #it solved it
             num_solved+=1
     return float(num_solved)/numtrials
 
@@ -120,7 +115,7 @@ def singleton_maze():
     [maze,start,end]=init_maze(p,size)
     path=[[0,start]];
 
-    print step_solve(maze,[1,start],path)
+    print step_solve(maze,[1,start],path, start, end)
     print_maze(maze)
 
 def main():
@@ -130,8 +125,8 @@ def main():
     getandplot(15,n)
     getandplot(20,n)
     getandplot(22,n)
-    plt.legend()
-    plt.show()
+ #   plt.legend()
+  #  plt.show()
     pass
 
 
