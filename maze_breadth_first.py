@@ -86,21 +86,11 @@ def solve_maze(maze,start):
         if curSpot.is_end:
             return True
 
+        neighbors = [[x, y-1], [x, y+1], [x-1, y], [x+1, y]]
         #add upto four spots to reachable
-        #up
-        if maze[x][y-1].available():
-            visit(x, y-1)
-        #down
-        if maze[x][y+1].available():
-            visit(x, y+1)
-        #left
-        if maze[x-1][y].available():
-            visit(x-1, y)
-        #right
-        if maze[x+1][y].available():
-            visit(x+1, y)
-
-        
+        for neighbor_x, neighbor_y in neighbors:
+            if maze[neighbor_x][neighbor_y].available():
+                visit(neighbor_x, neighbor_y)
 
     return False
 
