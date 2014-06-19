@@ -68,8 +68,7 @@ class Spot(object):
 def solve_maze(maze,start):
     reachable=[[1,start]] #list of reachable spots
     curSpot=maze[1][start]
-    if curSpot.is_wall:
-        return False
+    assert not curSpot.is_wall
     curSpot.checked=True;
 
     while(reachable):
