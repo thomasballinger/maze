@@ -95,7 +95,7 @@ def maze_data(maze_size,numtrials,p):
         path=[[0,start]];
         if (not maze[1][start].is_wall) and step_solve(maze,[1,start],path): #it solved it
             num_solved+=1
-    return (num_solved+.0)/numtrials
+    return float(num_solved)/numtrials
 
 def getandplot(size,numtrials):
     data=[];
@@ -124,17 +124,18 @@ def singleton_maze():
     print_maze(maze)
 
 def main():
-    getandplot(5,10000)
-    getandplot(10,10000)
-    getandplot(15,10000)
-    getandplot(20,10000)
-    getandplot(22,10000)
+    n = 20
+    getandplot(5,n)
+    getandplot(10,n)
+    getandplot(15,n)
+    getandplot(20,n)
+    getandplot(22,n)
     plt.legend()
     plt.show()
     pass
 
 
-#if __name__ == '__main__':
-#   main()
-#main()
-singleton_maze()
+if __name__ == '__main__':
+   main()
+
+   #singleton_maze()
