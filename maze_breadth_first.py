@@ -1,45 +1,42 @@
 import random
 import matplotlib.pyplot as plt
 
-def init_maze(p,n):
-    """
-    Returns maze (a list of lists of spots), start column, end column
 
-    start is always in the top row
-    end is always in the bottom row
-    """
-    maze=[[Spot(p) for i in range(n)] for j in range(n)]
-    for i in range(n):
-        #make edges
-        maze[0][i].is_wall=True;
-        maze[n-1][i].is_wall=True;
-        maze[i][0].is_wall=True;
-        maze[i][n-1].is_wall=True;
-    start=random.randint(1,n-3)
-    end=random.randint(1,n-3)
-    maze[0][start].is_start=True
-    maze[0][start].on_path=True
-    maze[0][start].is_wall=True
-    maze[n-1][end].is_end=True
-    maze[n-1][end].is_wall=False
+class Maze(object):
+    def __init__(self, p, n):
+        """
+        Returns maze (a list of lists of spots), start column, end column
 
-    clear_windows(maze, start, end)
+        start is always in the top row
+        end is always in the bottom row
+        """
+        self.n = n
+        self.board=[[Spot(p) for i in range(n)] for j in range(n)]
+        for i in range(n):
+            #make edges
+            self.board[0][i].is_wall=True;
+            self.board[n-1][i].is_wall=True;
+            self.board[i][0].is_wall=True;
+            self.board[i][n-1].is_wall=True;
+        self.start=random.randint(1,n-3)
+        self.end=random.randint(1,n-3)
+        self.board[0][self.start].is_start=True
+        self.board[0][self.start].on_path=True
+        self.board[0][self.start].is_wall=True
+        self.board[n-1][self.end].is_end=True
+        self.board[n-1][self.end].is_wall=False
 
-    return maze, start, end
+        self.clear_windows()
 
-def clear_windows(maze, start, end):
-    """Makes maze not impossible one first and last moves
+    def clear_windows(self):
+        """Makes maze not impossible one first and last moves
 
-    the three spaces within the maze proper (excluding the
-    outer wall) are made not walls
-    """
-    n = len(maze)
-    maze[1][start].is_wall=False
-    maze[1][start+1].is_wall=False
-    maze[1][start-1].is_wall=False
-    maze[n-2][end].is_wall=False
-    maze[n-2][end+1].is_wall=False
-    maze[n-2][end-1].is_wall=False
+        the three spaces within the maze proper (excluding the
+        outer wall) are made not walls
+        """
+        for spot in (self.board[1][self.start-1:self.start+1]
+                     + self.board[self.n-2][self.end-1:self.end+1]):
+            spot.is_wall = False
 
 
 def print_maze(maze):
@@ -53,7 +50,7 @@ class Spot(object):
     def __init__(self, p):
         self.is_wall=(random.random()<p);
         self.prev=None;
-        self.is_start=False;    
+        self.is_start=False;
         self.is_end=False;
         self.checked=False;
     def __repr__(self):
@@ -64,6 +61,9 @@ class Spot(object):
         else: return ' '
     def available(self):
         return(all([not self.is_wall,not self.checked]))
+
+def neighbors(x, y):
+    return [[x, y-1], [x, y+1], [x-1, y], [x+1, y]]
 
 def solve_maze(maze,start):
 
@@ -86,9 +86,8 @@ def solve_maze(maze,start):
         if curSpot.is_end:
             return True
 
-        neighbors = [[x, y-1], [x, y+1], [x-1, y], [x+1, y]]
         #add upto four spots to reachable
-        for neighbor_x, neighbor_y in neighbors:
+        for neighbor_x, neighbor_y in neighbors(x, y):
             if maze[neighbor_x][neighbor_y].available():
                 visit(neighbor_x, neighbor_y)
 
@@ -99,11 +98,9 @@ def maze_trials(maze_size,numtrials,p):
     num_solved=0
 
     for _ in range(numtrials):
-        [maze,start,end]=init_maze(p,maze_size)
-        path=[[0,start]];
-        if maze[1][start].is_wall:
-            pass
-        elif solve_maze(maze,start): #it solved it
+        maze = Maze(p, maze_size)
+        path = [[0, maze.start]];
+        if solve_maze(maze.board, maze.start): #it solved it
             num_solved+=1
     return (num_solved+.0)/numtrials
 
@@ -127,10 +124,10 @@ def getandplot(size,numtrials):
 def singleton_maze():
     p=.4;
     size=20;
-    [maze,start,end]=init_maze(p,size)
-        
-    print solve_maze(maze,start)
-    print_maze(maze)
+    maze = Maze(p, size)
+
+    print solve_maze(maze.board, maze.start)
+    print_maze(maze.board)
 
 def main():
     #getandplot(10,200)
