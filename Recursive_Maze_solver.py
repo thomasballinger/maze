@@ -2,20 +2,26 @@ import random
 import matplotlib.pyplot as plt
 
 def init_maze(p,n):
+    """
+    Returns maze (list of lists of Spots), start column and end column
+
+    Start is always on the top row
+    End is always on the bottom row
+    """
     maze=[[Spot(p) for _ in range(n)] for _ in range(n)]
     for i in range(n):
         #make edges
-        maze[0][i].is_wall=True;
-        maze[n-1][i].is_wall=True;
-        maze[i][0].is_wall=True;
-        maze[i][n-1].is_wall=True;
-    start=random.randint(1,n-2)
-    end=random.randint(1,n-2)
-    maze[0][start].is_start=True
-    maze[0][start].on_path=True
-    maze[0][start].is_dud=True
-    maze[n-1][end].is_end=True
-    maze[n-1][end].is_wall=False
+        maze[0][i].is_wall = True;
+        maze[n-1][i].is_wall = True;
+        maze[i][0].is_wall = True;
+        maze[i][n-1].is_wall = True;
+    start=random.randint(1, n-2)
+    end=random.randint(1, n-2)
+    maze[0][start].is_start = True
+    maze[0][start].on_path = True
+    maze[0][start].is_dud = True
+    maze[n-1][end].is_end = True
+    maze[n-1][end].is_wall = False
 
     return maze, start, end
 
