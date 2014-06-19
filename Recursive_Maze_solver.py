@@ -38,7 +38,7 @@ class Spot(object):
         self.is_wall=(random.random()<p);
         self.is_dud=False;
         self.on_path=False;
-        self.is_start=False;    
+        self.is_start=False;
         self.is_end=False;
     def __repr__(self):
         if self.is_start: return 's'
@@ -46,8 +46,9 @@ class Spot(object):
         if self.on_path: return 'o'
         if self.is_wall: return '+'
         else: return ' '
+    @property
     def available(self):
-        return(all([not self.on_path,not self.is_wall,not self.is_dud]))
+        return(all([not self.on_path, not self.is_wall, not self.is_dud]))
 
 
 def step_solve(maze,loc,path):
@@ -71,16 +72,16 @@ def step_solve(maze,loc,path):
     
     
     # try down
-    if(maze[x+1][y].available()):
+    if(maze[x+1][y].available):
         return step_solve(maze,[x+1,y],path)
     # try up
-    if(maze[x-1][y].available()):
+    if(maze[x-1][y].available):
         return step_solve(maze,[x-1,y],path)
     #try right
-    if(maze[x][y+1].available()):
+    if(maze[x][y+1].available):
         return step_solve(maze,[x,y+1], path)
     # try left
-    if(maze[x][y-1].available()):
+    if(maze[x][y-1].available):
         return step_solve(maze,[x,y-1],path)
     
     #all four possibilities have been exhausted, this node is a dud
