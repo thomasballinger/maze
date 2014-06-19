@@ -74,8 +74,7 @@ def solve_maze(maze,start):
     while(reachable):
         
         #update cur
-        cur=reachable.pop()
-        x=cur[0];y=cur[1];
+        x, y = reachable.pop()
         curSpot=maze[x][y]
             
 
